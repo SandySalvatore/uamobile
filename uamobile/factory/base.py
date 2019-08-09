@@ -7,6 +7,6 @@ class AbstractUserAgentFactory(object):
     def create(self, environ, context):
         params = self.parser.parse(environ.get('HTTP_USER_AGENT', ''))
         device = self.device_class(environ, context)
-        for k, v in params.items():
+        for k, v in list(params.items()):
             setattr(device, k, v)
         return device

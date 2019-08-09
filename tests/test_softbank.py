@@ -137,7 +137,7 @@ def test_jphone_2_0():
                  'HTTP_X_JPHONE_COLOR'  : 'G4',
                  'HTTP_X_JPHONE_DISPLAY': '116*112',
                  })
-    assert isinstance(ua.version, basestring)
+    assert isinstance(ua.version, str)
     assert not ua.is_3g(), 'Invalid generation'
     assert ua.is_type_c(), 'Invalid type %s' % ua.version
     assert not ua.is_type_p(), 'Invalid type %s'  % ua.version

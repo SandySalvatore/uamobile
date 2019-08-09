@@ -39,13 +39,13 @@ class WillcomScraper(Scraper):
         sep = 0
         for td in doc.xpath("//div[@id='wrapper']/div/div/div/table[@class='plan03']/tr/td"):
             if td.attrib.get('colspan') == "4":
-                if u'削除' in td.text:
+                if '削除' in td.text:
                     break
             else:
                 if td.attrib.get('align') == 'center' and td.attrib.get('bgcolor') == 'white':
                     txt = td.text
                     if txt is not None:
-                        txt = txt.strip(ur'\u0009\u000a\u000d\u0020\u00a0')
+                        txt = txt.strip(r'\u0009\u000a\u000d\u0020\u00a0')
                     if txt:
                         res.append(txt)
         return res

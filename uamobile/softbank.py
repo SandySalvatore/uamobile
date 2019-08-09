@@ -105,7 +105,7 @@ class SoftBankUserAgent(UserAgent):
         create a new Display object.
         """
         try:
-            width, height = map(int, self.environ.get('HTTP_X_JPHONE_DISPLAY', '').split('*', 1))
+            width, height = list(map(int, self.environ.get('HTTP_X_JPHONE_DISPLAY', '').split('*', 1)))
         except ValueError:
             # x-jphone-display is absent, or invalid format
             width = None

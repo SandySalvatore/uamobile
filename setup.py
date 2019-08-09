@@ -9,7 +9,7 @@ major, minor, micro, releaselevel, serial = sys.version_info
 if (major, minor) < (2, 7):
     INSTALL_REQUIRES.append('importlib')
 
-VERSION = '0.3.0moriyoshi4'
+VERSION = '0.3.0moriyoshi4.altair'
 
 setup(name='uamobile',
       version=VERSION,
@@ -23,14 +23,14 @@ HTTP-MobileAgent? http://search.cpan.org/~kurihara/HTTP-MobileAgent-0.26/lib/HTT
 
 PEAR::Net_UserAgent_Mobile? http://pear.php.net/package/Net_UserAgent_Mobile
 """,
-      classifiers=filter(None, map(str.strip, """\
+      classifiers=[_f for _f in map(str.strip, """\
 Development Status :: 4 - Beta
 License :: OSI Approved :: MIT License
 Programming Language :: Python
 Operating System :: OS Independent
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware
-""".splitlines())),
+""".splitlines()) if _f],
       keywords='',
       author='Chihiro Sakatoku',
       author_email='csakatoku@gmail.com',

@@ -6,11 +6,11 @@ class DoCoMoScraper(Scraper):
     url = 'https://www.nttdocomo.co.jp/service/developer/make/content/spec/screen_area/index.html'
 
     def do_scrape(self, doc):
-        tables = [x for x in doc.xpath('//table') if x.attrib.get('summary', '').startswith(u'iモード')]
+        tables = [x for x in doc.xpath('//table') if x.attrib.get('summary', '').startswith('iモード')]
 
         res = {}
         for table in tables:
-            imode2 = table.attrib.get('summary').startswith(u'iモードブラウザ2.0')
+            imode2 = table.attrib.get('summary').startswith('iモードブラウザ2.0')
             for columns in table.findall('tr'):
                 if imode2:
                     model_index = 0
@@ -24,28 +24,28 @@ class DoCoMoScraper(Scraper):
                         display_index = 4
 
                 # model
-                model_text = u''.join(columns[model_index].itertext()).strip()
-                matcher = re.match(ur'([A-Z]{1,2})-?(\d{1,4}[a-zA-Z\u03bc]*)', model_text)
+                model_text = ''.join(columns[model_index].itertext()).strip()
+                matcher = re.match(r'([A-Z]{1,2})-?(\d{1,4}[a-zA-Z\u03bc]*)', model_text)
                 if not matcher:
                     continue
 
                 model = matcher.group(1) + matcher.group(2)
-                if model.endswith(u'\u03bc'):
+                if model.endswith('\u03bc'):
                     model = model[:-1] + 'myu'
-                elif model.endswith(u'II'):
+                elif model.endswith('II'):
                     model = model[:-2] + '2'
 
                 # height, width
-                display_text = u''.join(columns[display_index].itertext())
-                matcher = re.search(ur'(\d+).(\d+)', display_text)
+                display_text = ''.join(columns[display_index].itertext())
+                matcher = re.search(r'(\d+).(\d+)', display_text)
                 if not matcher:
                     continue
 
-                width, height = map(int, matcher.groups())
+                width, height = list(map(int, matcher.groups()))
 
                 # color
-                color_text = u''.join(columns[-1].itertext())
-                color = color_text.startswith(u'カラー')
+                color_text = ''.join(columns[-1].itertext())
+                color = color_text.startswith('カラー')
 
                 # depth
                 matcher = re.search(r'(\d+)', color_text)

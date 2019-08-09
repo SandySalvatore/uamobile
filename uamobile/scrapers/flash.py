@@ -19,12 +19,12 @@ class DoCoMoScraper(Scraper):
                     continue
 
                 model = span.text.strip()
-                matcher = re.match(ur'([A-Z]{1,2})-?(\d{1,3}[a-zA-Z\u03bc]+)', model)
+                matcher = re.match(r'([A-Z]{1,2})-?(\d{1,3}[a-zA-Z\u03bc]+)', model)
                 if not matcher:
                     continue
 
                 model = matcher.group(1) + matcher.group(2)
-                if model.endswith(u'\u03bc'):
+                if model.endswith('\u03bc'):
                     model = model[:-1] + 'myu'
 
                 res[str(model)] = str(version)
@@ -50,11 +50,11 @@ class EZWebScraper(Scraper):
                 if tr.attrib.get('bgcolor') == '#e5e5e5':
                     continue
 
-                version = u''.join(tr[13].itertext()).strip()
-                if version == u'\uff0d':
+                version = ''.join(tr[13].itertext()).strip()
+                if version == '\uff0d':
                     version = None
 
-                model = u''.join(tr[1].itertext()).strip()
+                model = ''.join(tr[1].itertext()).strip()
                 res[str(model)] = str(version)
 
         return res
@@ -64,17 +64,17 @@ class SoftBankScraper(Scraper):
 
     def do_scrape(self, doc):
         res = {}
-        tables = doc.xpath(ur'//div[@id="contents"]//div[@class="right_contents"]//div[@class="terminaltable"]/table')
+        tables = doc.xpath(r'//div[@id="contents"]//div[@class="right_contents"]//div[@class="terminaltable"]/table')
         for table in tables:
             for tr in table.xpath('tr/td[(@class != "terminalname") and (@class != "hedder")]/..'):
                 if len(tr) == 5:
                     models = tr[0].text.strip()
-                    g = re.match(ur'Flash Lite(?:\u2122|\[TM\])([0-9]+\.[0-9]+)', tr[1].text.strip())
+                    g = re.match(r'Flash Lite(?:\u2122|\[TM\])([0-9]+\.[0-9]+)', tr[1].text.strip())
                     if g is not None:
                         version = g.group(1)
                     else:
                         version = None
-                    models = models.split(u'/')
+                    models = models.split('/')
                     for model in models:
                         res[model] = str(version)
 

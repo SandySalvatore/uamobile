@@ -230,7 +230,7 @@ WILLCOM = (
 def _test_func(p, ua, params):
     res = p.parse(ua)
     assert isinstance(res, dict)
-    for k, v in params.items():
+    for k, v in list(params.items()):
         assert res.get(k) == v, '%r expected, actual %r' % (v, res.get(k))
 
 def test_docomo_parser():

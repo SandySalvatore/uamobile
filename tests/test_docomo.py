@@ -33,7 +33,7 @@ def test_useragent_docomo():
         assert ua.supports_cookie() == supports_cookie
 
         if options:
-            for k, v in options.items():
+            for k, v in list(options.items()):
                 if k == 'status':
                     assert ua.status == v, msg(ua, ua.status, v)
                 elif k == 'serial_number':

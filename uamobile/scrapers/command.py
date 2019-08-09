@@ -42,25 +42,25 @@ def main():
     try:
         scraper = import_module('uamobile.scrapers.%s' % opts.module)
     except ImportError:
-        print "no scaper module '%s'" % opts.module
+        print("no scaper module '%s'" % opts.module)
         parser.print_help()
         sys.exit(1)
 
     if opts.format == 'json':
         if not has_json:
-            print "To use 'json' format, you need json or simplejson module"
+            print("To use 'json' format, you need json or simplejson module")
             sys.exit(1)
         dump_func = lambda result: json.dumps(result, encoding='utf-8', ensure_ascii=False, indent=2).encode('utf-8')
     elif opts.format == 'yaml':
         if not has_yaml:
-            print "To use 'yaml' format, you need PyYAML"
+            print("To use 'yaml' format, you need PyYAML")
             sys.exit(1)
         dump_func = lambda result: yaml.dump(result)
     elif opts.format == 'python':
         dump_func = lambda result: "DATA = %s\n" % pprint.pformat(result, indent=2)
     else:
         # unsupported format
-        print "unsupported format %s" % opts.format
+        print("unsupported format %s" % opts.format)
         parser.print_help()
         sys.exit(1)
 
@@ -73,7 +73,7 @@ def main():
              }.get(opts.carrier.lower())
     cls = getattr(scraper, name, None)
     if cls is None:
-        print "scraper not found for the carrier '%s'" % opts.carrier
+        print("scraper not found for the carrier '%s'" % opts.carrier)
         sys.exit(1)
 
     content = dump_func(cls().scrape())

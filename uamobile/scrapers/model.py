@@ -9,5 +9,5 @@ class EZWebScraper(Scraper):
         for tr in doc.xpath('//table[@cellspacing="1"]/tr'):
             t = tr.findall('td/div')
             if len(t) >= 2 and t[0].text is not None and t[1].text is not None:
-                res.append((t[1].text, unicode(t[0].text)))
+                res.append((t[1].text, str(t[0].text)))
         return res
